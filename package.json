@@ -25,7 +25,8 @@
     "react-toastify": "^11.0.5",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.14",
-    "tailwindcss-glitch": "^0.2.6"
+    "tailwindcss-glitch": "^0.2.6",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",

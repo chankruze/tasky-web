@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { evolve } from "ramda";
 import { apiPath } from "@/config/api";
 import { convertKeysToCamelCase, convertKeysToSnakeCase } from "@/utils/convertCase";
-import { getAccessToken, clearTokens } from "@/utils/token";
+import { clearAuthStore, getAccessTokenFromStore } from "@/utils/authHelpers";
 import routes from "@/routes";
 
 /**
@@ -33,7 +33,7 @@ const createAxiosInstance = (): AxiosInstance => {
    */
   instance.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
-      const token = getAccessToken();
+      const token = getAccessTokenFromStore();
 
       if (token) {
         config.headers.set("Authorization", `Bearer ${token}`);
@@ -66,7 +66,7 @@ const createAxiosInstance = (): AxiosInstance => {
       const status = error.response?.status;
 
       if (status === 401) {
-        clearTokens();
+        clearAuthStore();
 
         if (window.location.pathname !== routes.auth.login) {
           toast.error("Session expired. Please sign in again.");

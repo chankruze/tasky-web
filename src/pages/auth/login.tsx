@@ -6,7 +6,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const loginMutation = useLogin({ redirectTo: routes.tasks.index });
+  const loginMutation = useLogin({ redirectTo: routes.root });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

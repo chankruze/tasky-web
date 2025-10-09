@@ -7,7 +7,7 @@ export default function SignupPage() {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
-  const signupMutation = useSignup({ redirectTo: routes.tasks.index });
+  const signupMutation = useSignup({ redirectTo: routes.root });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

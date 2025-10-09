@@ -8,16 +8,23 @@ import queryClient from "@/utils/queryClient";
 import "./tailwind.css";
 import App from "./App.tsx";
 import routes from "@/routes.ts";
-import { LoginPage, SignupPage, ErrorPage } from "@/pages";
+import { LoginPage, SignupPage, ErrorPage, RequireAuth } from "@/pages";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
-          <Route index element={<App />} />
+          {/* Public Routes */}
           <Route path={routes.auth.login} element={<LoginPage />} />
           <Route path={routes.auth.register} element={<SignupPage />} />
+
+          {/* Protected Routes */}
+          <Route element={<RequireAuth redirectTo={routes.auth.login} />}>
+            <Route path={routes.root} element={<App />} />
+          </Route>
+
+          {/* Fallback Route */}
           <Route path="*" element={<ErrorPage homeUrl={routes.root} />} />
         </Routes>
       </BrowserRouter>
