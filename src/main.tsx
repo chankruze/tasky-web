@@ -7,9 +7,8 @@ import { ToastContainer } from "react-toastify";
 import queryClient from "@/utils/queryClient";
 import "./tailwind.css";
 import App from "./App.tsx";
-
-import LoginPage from "./pages/Login.tsx";
-import SignupPage from "./pages/Register.tsx";
+import routes from "@/routes.ts";
+import { LoginPage, SignupPage, ErrorPage } from "@/pages";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -17,8 +16,9 @@ createRoot(document.getElementById("root")!).render(
       <BrowserRouter>
         <Routes>
           <Route index element={<App />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<SignupPage />} />
+          <Route path={routes.auth.login} element={<LoginPage />} />
+          <Route path={routes.auth.register} element={<SignupPage />} />
+          <Route path="*" element={<ErrorPage homeUrl={routes.root} />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer position="bottom-right" autoClose={1500} />
