@@ -1,5 +1,3 @@
-import * as R from "ramda";
-
 type AnyObject = Record<string, unknown>;
 
 /**
@@ -20,14 +18,11 @@ const toSnakeCase = (str: string): string =>
 export const convertKeysToCamelCase = <T>(obj: T): T => {
   if (Array.isArray(obj)) {
     return obj.map(convertKeysToCamelCase) as unknown as T;
-  } else if (R.is(Object, obj)) {
-    return R.pipe(
-      R.toPairs,
-      R.map(([key, value]) => [toCamelCase(key as string), convertKeysToCamelCase(value)]),
-      R.fromPairs
-    )(obj as AnyObject) as T;
+  } else if (obj && typeof obj === "object" && !Array.isArray(obj)) {
+    return Object.fromEntries(
+      Object.entries(obj as AnyObject).map(([k, v]) => [toCamelCase(k), convertKeysToCamelCase(v)])
+    ) as T;
   }
-
   return obj;
 };
 
@@ -37,13 +32,10 @@ export const convertKeysToCamelCase = <T>(obj: T): T => {
 export const convertKeysToSnakeCase = <T>(obj: T): T => {
   if (Array.isArray(obj)) {
     return obj.map(convertKeysToSnakeCase) as unknown as T;
-  } else if (R.is(Object, obj)) {
-    return R.pipe(
-      R.toPairs,
-      R.map(([key, value]) => [toSnakeCase(key as string), convertKeysToSnakeCase(value)]),
-      R.fromPairs
-    )(obj as AnyObject) as T;
+  } else if (obj && typeof obj === "object" && !Array.isArray(obj)) {
+    return Object.fromEntries(
+      Object.entries(obj as AnyObject).map(([k, v]) => [toSnakeCase(k), convertKeysToSnakeCase(v)])
+    ) as T;
   }
-
   return obj;
 };

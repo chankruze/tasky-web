@@ -5,7 +5,6 @@ import axios, {
   type AxiosResponse,
 } from "axios";
 import { toast } from "react-toastify";
-import { evolve } from "ramda";
 import { apiPath } from "@/config/api";
 import { convertKeysToCamelCase, convertKeysToSnakeCase } from "@/utils/convertCase";
 import { clearAuthStore, getAccessTokenFromStore } from "@/utils/authHelpers";
@@ -39,10 +38,15 @@ const createAxiosInstance = (): AxiosInstance => {
         config.headers.set("Authorization", `Bearer ${token}`);
       }
 
-      return evolve({
-        data: convertKeysToSnakeCase,
-        params: convertKeysToSnakeCase,
-      })(config) as InternalAxiosRequestConfig;
+      if (config.data) {
+        config.data = convertKeysToSnakeCase(config.data);
+      }
+
+      if (config.params) {
+        config.params = convertKeysToSnakeCase(config.params);
+      }
+
+      return config as InternalAxiosRequestConfig;
     },
     (error) => Promise.reject(error)
   );
