@@ -1,6 +1,6 @@
 function App() {
   return (
-    <div className="p-4 min-h-screen flex flex-col items-center justify-center">
+    <div className="flex min-h-screen flex-col items-center justify-center p-4">
       <p className="text-3xl font-bold">Tasky!</p>
     </div>
   );

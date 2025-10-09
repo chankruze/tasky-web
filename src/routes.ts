@@ -1,5 +1,4 @@
-type ExtractRouteParams<T extends string> =
-  T extends `${string}:${string}/${infer Rest}`
+type ExtractRouteParams<T extends string> = T extends `${string}:${string}/${infer Rest}`
     ? [string, ...ExtractRouteParams<`/${Rest}`>]
     : T extends `${string}:${string}`
     ? [string]

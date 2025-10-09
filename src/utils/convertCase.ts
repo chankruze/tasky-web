@@ -12,7 +12,7 @@ const toCamelCase = (str: string): string =>
  * Converts a camelCase or PascalCase string to snake_case.
  */
 const toSnakeCase = (str: string): string =>
-  str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+  str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
 
 /**
  * Recursively converts object keys to camelCase.
@@ -23,10 +23,7 @@ export const convertKeysToCamelCase = <T>(obj: T): T => {
   } else if (R.is(Object, obj)) {
     return R.pipe(
       R.toPairs,
-      R.map(([key, value]) => [
-        toCamelCase(key),
-        convertKeysToCamelCase(value),
-      ]),
+      R.map(([key, value]) => [toCamelCase(key), convertKeysToCamelCase(value)]),
       R.fromPairs
     )(obj as AnyObject) as T;
   }
@@ -43,10 +40,7 @@ export const convertKeysToSnakeCase = <T>(obj: T): T => {
   } else if (R.is(Object, obj)) {
     return R.pipe(
       R.toPairs,
-      R.map(([key, value]) => [
-        toSnakeCase(key),
-        convertKeysToSnakeCase(value),
-      ]),
+      R.map(([key, value]) => [toSnakeCase(key), convertKeysToSnakeCase(value)]),
       R.fromPairs
     )(obj as AnyObject) as T;
   }

@@ -7,10 +7,7 @@ import axios, {
 import { toast } from "react-toastify";
 import { evolve } from "ramda";
 import { apiPath } from "@/config/api";
-import {
-  convertKeysToCamelCase,
-  convertKeysToSnakeCase,
-} from "@/utils/convertCase";
+import { convertKeysToCamelCase, convertKeysToSnakeCase } from "@/utils/convertCase";
 import { getAccessToken, clearTokens } from "@/utils/token";
 import routes from "@/routes";
 
@@ -39,7 +36,7 @@ const createAxiosInstance = (): AxiosInstance => {
       const token = getAccessToken();
 
       if (token) {
-        config.headers.set('Authorization', `Bearer ${token}`);
+        config.headers.set("Authorization", `Bearer ${token}`);
       }
 
       return evolve({
@@ -54,15 +51,13 @@ const createAxiosInstance = (): AxiosInstance => {
    * 📥 Response Interceptor
    * 1. Converts response keys → camelCase
    * 2. Handles error responses (401, 404, etc.)
-   */;
-  instance.interceptors.response.use(
+   */ instance.interceptors.response.use(
     (response: AxiosResponse) => {
       if (response.data) {
         response.data = convertKeysToCamelCase(response.data);
       }
 
-      const successMessage =
-        response.data?.message || response.data?.notice;
+      const successMessage = response.data?.message || response.data?.notice;
       if (successMessage) toast.success(successMessage);
 
       return response;
@@ -72,8 +67,11 @@ const createAxiosInstance = (): AxiosInstance => {
 
       if (status === 401) {
         clearTokens();
-        toast.error("Session expired. Please sign in again.");
-        setTimeout(() => (window.location.href = routes.auth.login), 1500);
+
+        if (window.location.pathname !== routes.auth.login) {
+          toast.error("Session expired. Please sign in again.");
+          setTimeout(() => (window.location.href = routes.auth.login), 1500);
+        }
       } else if (status === 403) {
         toast.error("Access denied. You don't have permission to perform this action.");
       } else if (status === 404) {
@@ -82,9 +80,7 @@ const createAxiosInstance = (): AxiosInstance => {
         toast.error("Something went wrong on the server.");
       } else {
         const message =
-          error.response?.data?.error ||
-          error.message ||
-          "An unexpected error occurred.";
+          error.response?.data?.error || error.message || "An unexpected error occurred.";
         toast.error(message);
       }
 

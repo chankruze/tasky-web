@@ -15,10 +15,7 @@ export const API_VERSION_PATH = `/${defaultVersion}`;
  * @example apiPath("auth/signin", false) → https://api.tasky.com/auth/signin
  * @example apiPath("tasks", "v2") → https://api.tasky.com/v2/tasks
  */
-export const apiPath = (
-  path: string = "",
-  version: string | false = defaultVersion
-): string => {
+export const apiPath = (path: string = "", version: string | false = defaultVersion): string => {
   const versionPath = version ? `/${version}` : "";
   return `${API_BASE_URL}${versionPath}/${path.replace(/^\/+/, "")}`;
 };
