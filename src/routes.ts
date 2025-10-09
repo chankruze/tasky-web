@@ -1,6 +1,6 @@
 type ExtractRouteParams<T extends string> = T extends `${string}:${string}/${infer Rest}`
-    ? [string, ...ExtractRouteParams<`/${Rest}`>]
-    : T extends `${string}:${string}`
+  ? [string, ...ExtractRouteParams<`/${Rest}`>]
+  : T extends `${string}:${string}`
     ? [string]
     : [];
 
@@ -23,6 +23,10 @@ const defineRoute = <T extends string>(template: T) => {
 
 const routes = {
   root: "/",
+  auth: {
+    login: "/login",
+    register: "/register",
+  },
   tasks: {
     index: "/tasks",
     task: {

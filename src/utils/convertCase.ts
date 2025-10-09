@@ -1,6 +1,6 @@
 import * as R from "ramda";
 
-type AnyObject = Record<string, any>;
+type AnyObject = Record<string, unknown>;
 
 /**
  * Converts a snake_case string to camelCase.
@@ -23,7 +23,7 @@ export const convertKeysToCamelCase = <T>(obj: T): T => {
   } else if (R.is(Object, obj)) {
     return R.pipe(
       R.toPairs,
-      R.map(([key, value]) => [toCamelCase(key), convertKeysToCamelCase(value)]),
+      R.map(([key, value]) => [toCamelCase(key as string), convertKeysToCamelCase(value)]),
       R.fromPairs
     )(obj as AnyObject) as T;
   }
@@ -40,7 +40,7 @@ export const convertKeysToSnakeCase = <T>(obj: T): T => {
   } else if (R.is(Object, obj)) {
     return R.pipe(
       R.toPairs,
-      R.map(([key, value]) => [toSnakeCase(key), convertKeysToSnakeCase(value)]),
+      R.map(([key, value]) => [toSnakeCase(key as string), convertKeysToSnakeCase(value)]),
       R.fromPairs
     )(obj as AnyObject) as T;
   }
