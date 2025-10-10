@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from "react-router";
 import useAuthStore from "@/stores/useAuthStore";
+import Layout from "./layout";
 
 interface RequireAuthProps {
   redirectTo: string;
@@ -12,7 +13,11 @@ const RequireAuth: React.FC<RequireAuthProps> = ({ redirectTo }) => {
     return <Navigate to={redirectTo} replace />;
   }
 
-  return <Outlet />;
+  return (
+    <Layout>
+      <Outlet />;
+    </Layout>
+  );
 };
 
 export default RequireAuth;

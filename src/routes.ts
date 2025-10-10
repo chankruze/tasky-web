@@ -32,6 +32,7 @@ const routes = {
     task: {
       index: defineRoute("/tasks/:taskId"),
     },
+    tasksWithStatus: (status: string) => `/tasks?status=${status}`,
   },
   settings: {
     index: "/settings",

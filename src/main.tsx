@@ -6,9 +6,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ToastContainer } from "react-toastify";
 import queryClient from "@/utils/queryClient";
 import "./tailwind.css";
-import App from "./App.tsx";
 import routes from "@/routes.ts";
-import { LoginPage, SignupPage, ErrorPage, RequireAuth } from "@/pages";
+import { HomePage, LoginPage, SignupPage, ErrorPage, RequireAuth } from "@/pages";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -21,7 +20,7 @@ createRoot(document.getElementById("root")!).render(
 
           {/* Protected Routes */}
           <Route element={<RequireAuth redirectTo={routes.auth.login} />}>
-            <Route path={routes.root} element={<App />} />
+            <Route path={routes.root} element={<HomePage />} />
           </Route>
 
           {/* Fallback Route */}
